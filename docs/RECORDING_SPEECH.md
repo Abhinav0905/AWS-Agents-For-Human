@@ -1,17 +1,32 @@
-# Recording speech
+# Recording script
 
-Read this out loud. Short sentences on purpose. Pause where the line breaks.
+Read the quoted lines out loud. Short sentences on purpose. Pause at each line break.
 
-Total spoken time: about **4 minutes 10 seconds** at a normal pace. That leaves slack under the 5:00 cap.
+**Spoken time: about 4 minutes 5 seconds.** That leaves room under the 5:00 cap.
 
-Record in five takes and cut them together. Do not try to do it in one run.
+Record five takes and cut them together. Do not try it in one run — the middle one always drifts.
 
 ---
 
-## Shot 1 — the mail (0:00 – 0:32)
+## Setup, once, before you record
 
-**On screen:** Finder open at `data/estate_alvarez/mail/`, icon view, thumbnails showing. Scroll down once,
-slowly.
+```bash
+cd /Users/mac001/Downloads/aws_hackathon/postscript
+source .venv/bin/activate
+make test                       # should say 24 passed
+rm -rf .postscript out && postscript intake
+```
+
+- Terminal font **18pt or bigger**
+- Do Not Disturb on, dock hidden, desktop cleared
+- Browser at 125% zoom, **one tab**, no bookmarks bar
+- Have `https://executors-agent.onrender.com` open in a second tab for the last shot
+
+---
+
+## Shot 1 — the mail · 0:00–0:32
+
+**Screen:** Finder at `data/estate_alvarez/mail/`, icon view, thumbnails on. Scroll down once, slowly.
 
 > My mother was the executor of my grandfather's estate.
 >
@@ -30,32 +45,48 @@ slowly.
 
 ---
 
-## Shot 2 — intake (0:32 – 1:08)
+## Shot 2 — intake · 0:32–1:05
 
-**On screen:** terminal. Run `postscript intake`. Let the table finish. Then scroll down to the skipped line.
+**Screen:** terminal. Run it, let the table land, then scroll to the `skipped:` line.
 
-**Command:**
 ```bash
 postscript intake
 ```
 
 > It starts with the shoebox. Fifteen pieces of mail.
 >
-> It found all ten institutions. It merged the duplicate bank statement. And it threw one out — that one's a
-> marketing flyer, there's no account on it.
+> It found all ten institutions. It merged the duplicate bank statement. And it threw one out — no account
+> number on it, so it's not relevant.
 >
-> Three of these are photographs. It read those too.
+> Three of these are photographs. Reading those needs vision on Bedrock. Offline, it tells you exactly which
+> ones it skipped and why.
 >
-> And when it can't read something, it says which one, and why. That's the pattern for the whole system. When
-> it doesn't know, it says so, on the record.
+> That's the pattern for the whole system. When it doesn't know, it says so, on the record.
+
+**Optional upgrade — costs 45 seconds, worth it.** Run intake against real Claude on Bedrock and it reads the
+photographs and names the flyer itself. If you do this, change the middle line to *"Three of these are
+photographs. It read those too — and that one it threw out as a marketing flyer."*
+
+```bash
+set -a && . ../.env && set +a
+unset AWS_BEARER_TOKEN_BEDROCK
+export POSTSCRIPT_MODEL=bedrock
+export POSTSCRIPT_MODEL_ID=us.anthropic.claude-haiku-4-5-20251001-v1:0
+postscript intake
+```
+
+**Then unset it again before Shot 3** or the next shot takes twenty minutes:
+
+```bash
+unset POSTSCRIPT_MODEL POSTSCRIPT_MODEL_ID
+```
 
 ---
 
-## Shot 3 — eight weeks (1:08 – 2:28)
+## Shot 3 — eight weeks · 1:05–2:25
 
-**On screen:** `make demo`. Dashboard in the browser. Watch the date climb in the header.
+**Screen:** `make demo`. Dashboard in the browser. Watch the date climb in the masthead.
 
-**Command:**
 ```bash
 rm -rf .postscript out && postscript intake >/dev/null 2>&1 && make demo
 ```
@@ -66,7 +97,7 @@ rm -rf .postscript out && postscript intake >/dev/null 2>&1 && make demo
 >
 > Northwind ignores the first letter, so it nudges them.
 >
-> Redwood Fitness says twice that they have no record of the cancellation. So it escalates to certified mail.
+> Redwood Fitness says twice they have no record of the cancellation. So it escalates to certified mail.
 > And they fold.
 >
 > Now watch what it is *not* doing while all of that happens.
@@ -75,35 +106,33 @@ rm -rf .postscript out && postscript intake >/dev/null 2>&1 && make demo
 
 ---
 
-## Shot 4 — the nine questions (2:28 – 3:30)
+## Shot 4 — the nine questions · 2:25–3:25
 
-**On screen:** decision inbox, browser window narrow like a phone. Open the Sequoia payout decision. Click
-approve. Then scroll the activity feed to a red BLOCKED row.
+**Screen:** the Decision inbox panel. Scroll it slowly. Stop on the **Pacific Coast Power** card — the one with
+the red **"policy caught it"** badge. Then the Activity feed, and its red BLOCKED rows.
 
 > Here is everything it asked her in eight weeks. Nine questions.
 >
-> This one. The insurer approved the claim and wants a payout election. Lump sum, or annuity.
->
-> Plain language. Two options. A recommendation. She taps approve, and it picks up on the next tick.
+> Each one is tagged with which gate it tripped. D2, an original leaving her hands. D3, a signature. D4,
+> something that can't be undone.
 >
 > And here's the part I actually care about.
 >
 > On day three, the agent tried to pay the final power bill on its own.
 >
-> It never got there. The Cedar policy stopped the call before the tool ran, and turned it into this question
-> instead.
+> It never got there. Cedar stopped the call before the tool ran, and turned it into this question instead.
+> That's what the red badge means.
 >
 > The prompt asks the agent to behave. The policy is what makes sure.
 
 ---
 
-## Shot 5 — the accounting and the number (3:30 – 4:10)
+## Shot 5 — the accounting, the number, and it's live · 3:25–4:05
 
-**On screen:** open `out/accounting_alvarez.pdf`. Show the cover with the verification stamp. Scroll to the
-decisions table. Then the schedule of actions — point at the Basis column. Then the terminal. Then the
-architecture diagram. Then the repo URL.
+**Screen:** open the PDF. Cover with the verification stamp, then the decisions table, then the schedule of
+actions — point at the **Basis** column. Then the terminal. Then scroll the dashboard to **The interruption
+budget**. Then the second browser tab with the live URL.
 
-**Commands:**
 ```bash
 postscript accounting && open out/accounting_alvarez.pdf
 postscript verify-chain
@@ -118,53 +147,33 @@ postscript verify-chain
 >
 > Change any one of them, and the chain breaks.
 >
-> Nineteen actions. Nine interruptions.
+> *(switch to the interruption budget graphic)*
 >
-> An agent that checks everything would have asked nineteen times.
+> Nine times it stopped and asked. Ten it finished on its own. An agent that confirms everything would have
+> asked nineteen times.
 >
 > It missed none of the nine decisions a real executor had to make. And it never once acted where the policy
 > said it needed her.
 >
-> Strands agents. Cedar in front of every tool call. The institutions behind MCP. And a receipt chain under all
-> of it.
+> *(switch to the live tab)*
+>
+> And it's running right now. Strands agents, Cedar in front of every tool call, the institutions behind MCP,
+> and a receipt chain under all of it.
 >
 > Thanks for watching.
 
 ---
 
-## Before you hit record
-
-- [ ] `source .venv/bin/activate` in every terminal window
-- [ ] `make test` — should say 24 passed
-- [ ] Terminal font 18pt or bigger
-- [ ] Do Not Disturb on, dock hidden, desktop clear
-- [ ] Browser at 125% zoom, one tab only
-- [ ] Reset state: `rm -rf .postscript out && postscript intake`
-
-## Two things that will bite you
-
-**Shot 2 with vision.** Reading the scans needs Bedrock. Set these first, or the narration won't match what's
-on screen:
-```bash
-set -a && . ../.env && set +a
-unset AWS_BEARER_TOKEN_BEDROCK
-export POSTSCRIPT_MODEL=bedrock
-export POSTSCRIPT_MODEL_ID=us.anthropic.claude-haiku-4-5-20251001-v1:0
-```
-It takes about 45 seconds. Let it run, then talk over the finished table.
-
-**Shot 3 must be offline.** Unset those variables again before `make demo`. The eight-week run on Bedrock takes
-over twenty minutes. Offline it takes two seconds and the numbers come out the same every time.
-
-```bash
-unset POSTSCRIPT_MODEL POSTSCRIPT_MODEL_ID
-```
-
-If anyone asks, say it straight: intake uses vision on Bedrock, the eight-week run is the deterministic offline
-clerk so the numbers reproduce. Same tools, same MCP calls, same policy.
-
 ## After
 
-- [ ] Upload to YouTube, set to **Public** (not unlisted)
+- [ ] Upload to YouTube, **Public** (not unlisted)
 - [ ] Title: `Postscript — the executor's agent | AWS Agents for Humans`
-- [ ] Put the repo link and the Render link in the description
+- [ ] In the description:
+      `Live: https://executors-agent.onrender.com`
+      `Code: https://github.com/Abhinav0905/AWS-Agents-For-Human`
+- [ ] Check it is under 5:00 including any title card
+
+## If you fall behind
+
+Cut Shot 1 to three sentences — stop after "Only an original." It's the one shot that can lose twelve seconds
+without losing the point.

@@ -35,7 +35,7 @@ dashboard:
 	postscript dashboard
 
 demo:
-	postscript simulate --weeks 8 --speed 0.15 & \
+	postscript simulate --weeks 8 --speed 1.4 & \
 	postscript dashboard
 
 deploy:

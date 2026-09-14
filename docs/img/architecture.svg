@@ -1,32 +1,183 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1120" viewBox="0 0 680 560" role="img">
-<title>Postscript architecture overview</title>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<style>
- .t{font:14px "Helvetica Neue",Helvetica,Arial,sans-serif;fill:#2c2c2a}.th{font:500 14px "Helvetica Neue",Helvetica,Arial,sans-serif}.ts{font:12px "Helvetica Neue",Helvetica,Arial,sans-serif}
- .box{fill:#f7f6f2;stroke:#b4b2a9;stroke-width:.5}.teal rect{fill:#e1f5ee;stroke:#0f6e56;stroke-width:.5}.teal .th{fill:#085041}.teal .ts{fill:#0f6e56}
- .coral rect{fill:#faece7;stroke:#993c1d;stroke-width:.5}.coral .th{fill:#712b13}.coral .ts{fill:#993c1d}.neutral .th{fill:#2c2c2a}.neutral .ts{fill:#5f5e5a}
- .arr{stroke:#5f5e5a;stroke-width:1.2;fill:none}
-</style>
-<rect width="680" height="560" fill="#ffffff"/>
-<rect class="box" x="220" y="40" width="240" height="472" rx="20"/>
-<text class="th neutral" x="340" y="62" text-anchor="middle" dominant-baseline="central" fill="#2c2c2a">Postscript on AgentCore</text>
-<text class="ts" x="340" y="80" text-anchor="middle" dominant-baseline="central" fill="#5f5e5a">Strands Agents SDK</text>
-<g class="teal"><rect x="240" y="100" width="200" height="56" rx="8"/><text class="th" x="340" y="118" text-anchor="middle" dominant-baseline="central">Intake agent</text><text class="ts" x="340" y="136" text-anchor="middle" dominant-baseline="central">Mail to ledger entries</text></g>
-<g class="teal"><rect x="240" y="184" width="200" height="56" rx="8"/><text class="th" x="340" y="202" text-anchor="middle" dominant-baseline="central">Runner agent</text><text class="ts" x="340" y="220" text-anchor="middle" dominant-baseline="central">One task per tick</text></g>
-<g class="teal"><rect x="240" y="268" width="200" height="56" rx="8"/><text class="th" x="340" y="286" text-anchor="middle" dominant-baseline="central">Interruption governor</text><text class="ts" x="340" y="304" text-anchor="middle" dominant-baseline="central">Cedar via Interventions</text></g>
-<g class="teal"><rect x="240" y="352" width="200" height="56" rx="8"/><text class="th" x="340" y="370" text-anchor="middle" dominant-baseline="central">Receipt hooks</text><text class="ts" x="340" y="388" text-anchor="middle" dominant-baseline="central">Hash-chained tool calls</text></g>
-<g class="neutral"><rect class="box" x="240" y="436" width="200" height="56" rx="8"/><text class="th" x="340" y="454" text-anchor="middle" dominant-baseline="central">Stores</text><text class="ts" x="340" y="472" text-anchor="middle" dominant-baseline="central">Ledger in S3, AgentCore Memory</text></g>
-<line x1="340" y1="156" x2="340" y2="180" class="arr" marker-end="url(#arrow)"/><line x1="340" y1="240" x2="340" y2="264" class="arr" marker-end="url(#arrow)"/><line x1="340" y1="324" x2="340" y2="348" class="arr" marker-end="url(#arrow)"/>
-<rect x="40" y="236" width="156" height="190" rx="12" fill="none" stroke="#b4b2a9" stroke-width=".5" stroke-dasharray="4 3"/>
-<text class="th" x="118" y="254" text-anchor="middle" dominant-baseline="central" fill="#2c2c2a">Executor (human)</text>
-<g class="coral"><rect x="48" y="268" width="140" height="56" rx="8"/><text class="th" x="118" y="286" text-anchor="middle" dominant-baseline="central">Decision inbox</text><text class="ts" x="118" y="304" text-anchor="middle" dominant-baseline="central">Web and SMS</text></g>
-<g class="coral"><rect x="48" y="352" width="140" height="56" rx="8"/><text class="th" x="118" y="370" text-anchor="middle" dominant-baseline="central">Accounting PDF</text><text class="ts" x="118" y="388" text-anchor="middle" dominant-baseline="central">Verified receipts</text></g>
-<g class="neutral"><rect class="box" x="490" y="100" width="150" height="56" rx="8"/><text class="th" x="565" y="118" text-anchor="middle" dominant-baseline="central">Estate mail</text><text class="ts" x="565" y="136" text-anchor="middle" dominant-baseline="central">Scans, PDFs, emails</text></g>
-<g class="neutral"><rect class="box" x="490" y="184" width="150" height="56" rx="8"/><text class="th" x="565" y="202" text-anchor="middle" dominant-baseline="central">EventBridge tick</text><text class="ts" x="565" y="220" text-anchor="middle" dominant-baseline="central">Runs daily</text></g>
-<g class="neutral"><rect class="box" x="490" y="268" width="150" height="56" rx="8"/><text class="th" x="565" y="286" text-anchor="middle" dominant-baseline="central">Institutions</text><text class="ts" x="565" y="304" text-anchor="middle" dominant-baseline="central">Simulated via MCP</text></g>
-<line x1="490" y1="128" x2="444" y2="128" class="arr" marker-end="url(#arrow)"/><line x1="490" y1="212" x2="444" y2="212" class="arr" marker-end="url(#arrow)"/>
-<line x1="444" y1="296" x2="486" y2="296" class="arr" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-<line x1="236" y1="296" x2="192" y2="296" class="arr" marker-end="url(#arrow)"/><line x1="236" y1="380" x2="192" y2="380" class="arr" marker-end="url(#arrow)"/>
-<rect x="220" y="522" width="12" height="12" rx="2" fill="#e1f5ee" stroke="#0f6e56" stroke-width=".5"/><text class="ts" x="240" y="528" dominant-baseline="central" fill="#5f5e5a">Agents on AgentCore</text>
-<rect x="380" y="522" width="12" height="12" rx="2" fill="#faece7" stroke="#993c1d" stroke-width=".5"/><text class="ts" x="400" y="528" dominant-baseline="central" fill="#5f5e5a">What the executor sees</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="880" viewBox="0 0 1600 880" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7488"/>
+    </marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M10,0 L0,5 L10,10 z" fill="#6b7488"/>
+    </marker>
+    <marker id="ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#98a0b3"/>
+    </marker>
+    <marker id="ago" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0d6b52"/>
+    </marker>
+    <marker id="astop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9c2b3f"/>
+    </marker>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#141b2d" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="880" fill="#fbfaf7"/>
+
+  <text x="48" y="52" font-size="30" font-weight="500" fill="#141b2d" font-family="Iowan Old Style, Palatino, Georgia, serif">Postscript — the executor's agent</text>
+  <text x="48" y="78" font-size="16" fill="#6b7488">Every tool call the agent proposes is authorized by a Cedar policy before it runs, and recorded whether it ran or not.</text>
+
+  <!-- AWS container -->
+  <rect x="352" y="112" width="884" height="640" rx="16" fill="#ffffff" stroke="#d8d4cc" stroke-width="1.5"/>
+  <path d="M352,128 a16,16 0 0 1 16,-16 h852 a16,16 0 0 1 16,16 v24 h-884 z" fill="#f1efe9"/>
+  <text x="374" y="140" font-size="14.5" font-weight="700" fill="#2b3550" letter-spacing="0.06em">AWS · BEDROCK AGENTCORE RUNTIME — STRANDS AGENTS SDK</text>
+
+  <!-- ============ external left ============ -->
+  <g filter="url(#sh)"><rect x="44" y="168" width="250" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/></g>
+  <text x="62" y="199" font-size="17" font-weight="700" fill="#141b2d">Estate mail</text>
+  <text x="62" y="223" font-size="14" fill="#6b7488">15 scans, PDFs and emails</text>
+
+  <g filter="url(#sh)"><rect x="44" y="290" width="250" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/></g>
+  <text x="62" y="321" font-size="17" font-weight="700" fill="#141b2d">EventBridge Scheduler</text>
+  <text x="62" y="345" font-size="14" fill="#6b7488">daily tick → Lambda</text>
+
+  <!-- ============ agents (column B) ============ -->
+  <g filter="url(#sh)">
+    <rect x="386" y="168" width="250" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/>
+    <rect x="386" y="168" width="250" height="4" rx="2" fill="#0d6b52"/>
+  </g>
+  <text x="404" y="201" font-size="17" font-weight="700" fill="#141b2d">Intake agent</text>
+  <text x="404" y="225" font-size="14" fill="#6b7488">structured output, vision</text>
+
+  <g filter="url(#sh)">
+    <rect x="386" y="290" width="250" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/>
+    <rect x="386" y="290" width="250" height="4" rx="2" fill="#0d6b52"/>
+  </g>
+  <text x="404" y="323" font-size="17" font-weight="700" fill="#141b2d">Runner agent</text>
+  <text x="404" y="347" font-size="14" fill="#6b7488">one task per invocation</text>
+
+  <!-- ============ column C ============ -->
+  <g filter="url(#sh)"><rect x="676" y="168" width="240" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/></g>
+  <text x="694" y="199" font-size="17" font-weight="700" fill="#141b2d">Amazon Bedrock</text>
+  <text x="694" y="223" font-size="14" fill="#6b7488">Claude</text>
+
+  <g filter="url(#sh)"><rect x="676" y="290" width="240" height="80" rx="11" fill="#f4f2ee" stroke="#d8d4cc"/></g>
+  <text x="694" y="321" font-size="17" font-weight="700" fill="#141b2d">Ledger</text>
+  <text x="694" y="345" font-size="14" fill="#6b7488">SQLite in S3 · DynamoDB-ready</text>
+
+  <!-- ============ column D ============ -->
+  <g filter="url(#sh)"><rect x="956" y="168" width="256" height="80" rx="11" fill="#f4f2ee" stroke="#d8d4cc"/></g>
+  <text x="974" y="199" font-size="17" font-weight="700" fill="#141b2d">AgentCore Memory</text>
+  <text x="974" y="223" font-size="14" fill="#6b7488">optional session manager</text>
+
+  <g filter="url(#sh)"><rect x="956" y="566" width="256" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/></g>
+  <text x="974" y="597" font-size="17" font-weight="700" fill="#141b2d">AgentCore Observability</text>
+  <text x="974" y="621" font-size="14" fill="#6b7488">OTEL traces</text>
+
+  <!-- ============ THE GOVERNOR ============ -->
+  <g filter="url(#sh)">
+    <rect x="386" y="414" width="530" height="110" rx="13" fill="#fdf1dc" stroke="#e8c583" stroke-width="2"/>
+    <rect x="386" y="414" width="530" height="5" rx="2.5" fill="#9a6510"/>
+  </g>
+  <text x="408" y="452" font-size="19" font-weight="700" fill="#141b2d">Interruption governor</text>
+  <text x="408" y="476" font-size="14.5" fill="#6b7488">Strands intervention wrapping the vended CedarAuthorization</text>
+  <text x="408" y="501" font-size="14.5" fill="#9a6510" font-weight="600">Cedar denies by default · three permit rules · D1–D5 gates</text>
+
+  <!-- ============ receipts ============ -->
+  <g filter="url(#sh)">
+    <rect x="386" y="566" width="250" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/>
+    <rect x="386" y="566" width="250" height="4" rx="2" fill="#0d6b52"/>
+  </g>
+  <text x="404" y="599" font-size="17" font-weight="700" fill="#141b2d">Receipt hooks</text>
+  <text x="404" y="623" font-size="14" fill="#6b7488">AfterToolCallEvent</text>
+
+  <g filter="url(#sh)"><rect x="676" y="566" width="240" height="80" rx="11" fill="#f4f2ee" stroke="#d8d4cc"/></g>
+  <text x="694" y="594" font-size="17" font-weight="700" fill="#141b2d">Receipt chain</text>
+  <text x="694" y="616" font-size="14" fill="#6b7488">append-only, hash-linked</text>
+  <text x="694" y="635" font-size="13.5" fill="#0d6b52" font-weight="600">136 records · verified</text>
+
+  <!-- ============ institutions ============ -->
+  <g filter="url(#sh)">
+    <rect x="1300" y="414" width="256" height="110" rx="13" fill="#ffffff" stroke="#d8d4cc"/>
+    <rect x="1300" y="414" width="256" height="4" rx="2" fill="#1b6a8f"/>
+  </g>
+  <text x="1318" y="452" font-size="17" font-weight="700" fill="#141b2d">Institution gateway</text>
+  <text x="1318" y="476" font-size="14" fill="#6b7488">MCP · 10 institutions</text>
+  <text x="1318" y="500" font-size="13.5" fill="#6b7488">bank, insurer, DMV, pension…</text>
+
+  <!-- ============ executor ============ -->
+  <g filter="url(#sh)">
+    <rect x="44" y="414" width="250" height="110" rx="13" fill="#fceaed" stroke="#e9a8b3" stroke-width="2"/>
+    <rect x="44" y="414" width="250" height="5" rx="2.5" fill="#9c2b3f"/>
+  </g>
+  <text x="62" y="452" font-size="18" font-weight="700" fill="#141b2d">Decision inbox</text>
+  <text x="62" y="476" font-size="14" fill="#6b7488">plain-language question</text>
+  <text x="62" y="500" font-size="13.5" fill="#9c2b3f" font-weight="600">9 in 8 weeks, not 19</text>
+
+  <g filter="url(#sh)"><rect x="44" y="566" width="250" height="80" rx="11" fill="#ffffff" stroke="#d8d4cc"/></g>
+  <text x="62" y="597" font-size="17" font-weight="700" fill="#141b2d">Executor's Accounting</text>
+  <text x="62" y="621" font-size="14" fill="#6b7488">PDF, chain-verified</text>
+
+  <g filter="url(#sh)"><rect x="44" y="688" width="250" height="60" rx="30" fill="#141b2d"/></g>
+  <text x="169" y="725" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">The executor</text>
+
+  <!-- ================= ARROWS ================= -->
+  <g stroke="#6b7488" stroke-width="2" fill="none">
+    <path d="M294,208 L380,208" marker-end="url(#a)"/>
+    <path d="M294,345 L380,345" marker-end="url(#a)"/>
+    <path d="M511,370 L511,408" marker-end="url(#a)"/>
+    <path d="M511,524 L511,560" marker-end="url(#a)"/>
+    <path d="M636,606 L670,606" marker-end="url(#a)"/>
+    <path d="M916,606 L950,606" marker-end="url(#a)"/>
+    <path d="M169,646 L169,682" marker-end="url(#a)"/>
+    <!-- ledger <-> runner, two-way -->
+    <path d="M642,330 L670,330" marker-end="url(#a)" marker-start="url(#a2)"/>
+    <!-- receipt chain -> accounting, routed under the hooks box -->
+    <path d="M796,646 L796,668 L322,668 L322,606 L300,606" marker-end="url(#a)"/>
+  </g>
+
+  <!-- model calls: one dashed trunk from the agents, branching to Bedrock and Memory -->
+  <g stroke="#98a0b3" stroke-width="1.8" fill="none" stroke-dasharray="6 5">
+    <path d="M636,208 L670,208" marker-end="url(#ad)"/>
+    <path d="M560,290 L560,266 L1084,266 L1084,254" marker-end="url(#ad)"/>
+    <path d="M796,266 L796,254" marker-end="url(#ad)"/>
+  </g>
+  <text x="600" y="258" font-size="13" fill="#98a0b3">model calls</text>
+
+  <!-- PERMIT -->
+  <path d="M916,462 L1294,462" stroke="#0d6b52" stroke-width="2.6" fill="none" marker-end="url(#ago)"/>
+  <rect x="1063" y="436" width="88" height="28" rx="14" fill="#e4f4ee" stroke="#9fd4c2"/>
+  <text x="1107" y="455" font-size="14.5" font-weight="700" fill="#0d6b52" text-anchor="middle">permit</text>
+
+  <!-- replies back to the runner, routed through the gutter above the governor -->
+  <path d="M1300,502 L1254,502 L1254,394 L660,394 L660,358 L642,358"
+        stroke="#6b7488" stroke-width="2" fill="none" marker-end="url(#a)" opacity="0.7"/>
+  <text x="978" y="388" font-size="13" fill="#6b7488">replies, inbound mail</text>
+
+  <!-- DENY -->
+  <path d="M380,462 L300,462" stroke="#9c2b3f" stroke-width="2.6" fill="none" marker-end="url(#astop)"/>
+  <rect x="296" y="404" width="80" height="28" rx="14" fill="#fceaed" stroke="#e9a8b3"/>
+  <text x="336" y="423" font-size="14.5" font-weight="700" fill="#9c2b3f" text-anchor="middle">deny</text>
+
+  <!-- approval token back to the runner -->
+  <path d="M230,414 L230,386 L340,386 L340,312 L380,312"
+        stroke="#9c2b3f" stroke-width="2" fill="none" marker-end="url(#astop)" stroke-dasharray="6 5" opacity="0.85"/>
+  <text x="232" y="380" font-size="13" fill="#9c2b3f" font-weight="600">single-use approval token</text>
+
+  <!-- the executor answers -->
+  <path d="M100,688 L100,676 L26,676 L26,470 L38,470"
+        stroke="#9c2b3f" stroke-width="2" fill="none" marker-end="url(#astop)" opacity="0.55"/>
+
+  <!-- ================= legend ================= -->
+  <line x1="44" y1="792" x2="1556" y2="792" stroke="#e3e0da" stroke-width="1.5"/>
+  <g font-size="14.5" fill="#6b7488">
+    <rect x="44" y="812" width="26" height="13" rx="3" fill="#fdf1dc" stroke="#e8c583"/>
+    <text x="80" y="824">Cedar decides before the tool runs</text>
+    <rect x="352" y="812" width="26" height="13" rx="3" fill="#fceaed" stroke="#e9a8b3"/>
+    <text x="388" y="824">What the executor sees</text>
+    <rect x="620" y="812" width="26" height="13" rx="3" fill="#ffffff" stroke="#d8d4cc"/>
+    <text x="656" y="824">Strands agent / service</text>
+    <rect x="852" y="812" width="26" height="13" rx="3" fill="#f4f2ee" stroke="#d8d4cc"/>
+    <text x="888" y="824">Store</text>
+    <text x="960" y="824">— —  model call</text>
+  </g>
+  <text x="1556" y="824" font-size="14.5" fill="#6b7488" text-anchor="end">executors-agent.onrender.com</text>
 </svg>

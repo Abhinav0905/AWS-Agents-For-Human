@@ -1,56 +1,189 @@
-# Postscript: the executor's agent
+# Postscript
+
+**The executor's agent. It does the paperwork after a death, and interrupts you nine times instead of ninety.**
+
+🔗 **Live:** https://executors-agent.onrender.com
+💻 **Code:** https://github.com/Abhinav0905/AWS-Agents-For-Human
+
+---
+
+## Inspiration
+
+My mother was the executor of my grandfather's estate.
+
+What I remember is not the grief. It's the phone calls.
+
+A year of them. The bank wouldn't take a photocopy of the death certificate — only an original. Each original
+costs money, and you only get so many. The gym kept billing him and kept saying it never got the cancellation
+letter. Around month nine, my uncle decided he wanted the car.
+
+Almost none of that needed judgment. It needed someone who wouldn't give up.
+
+That's a background agent.
+
+---
 
 ## What it does
 
-When someone dies, one person becomes the executor and spends the better part of a year notifying banks,
-insurers, utilities, pensions, subscriptions, credit bureaus and the DMV. Each one wants different documents.
-Some want an original certified death certificate and will not take a copy. Some want a notary. Some ignore the
-first two letters.
+Postscript reads the estate's mail and works out who needs to be told.
 
-Postscript does that work in the background. It reads the estate's mail, builds a notification ledger, sends the
-notices, tracks the replies, follows up, escalates to certified mail when an institution stonewalls, and closes
-each matter out. It runs on a daily tick. There is no app to open.
+Then it tells them. It tracks replies. It follows up. When an institution ignores two letters, it escalates to
+certified mail. It closes each matter out and writes down what it did.
 
-It interrupts the executor for exactly five kinds of decision: money leaving the estate, an original document
-leaving her hands, anything needing her signature or a notary, anything irreversible, and any point where an
-heir disputes what is happening.
+It runs once a day. There's no app to open.
 
-## Who it is for
+**It interrupts the executor for five things:**
 
-The executor. Usually an adult child, usually grieving, usually with a full-time job. Empathy's research
-reports more than 500 hours of administrative work after a death, an average of $12,616 out of pocket, and close
-to 60% of executors with full-time jobs struggling to keep up at work.
+| Gate | Trigger | Example |
+|---|---|---|
+| **D1** | Money leaves the estate | the $142.17 final power bill |
+| **D2** | An original certificate leaves her hands | the bank, the insurer |
+| **D3** | Her signature, a notary, or a visit | the pension form, the DMV |
+| **D4** | Something that can't be undone | closing accounts, lump sum |
+| **D5** | An heir disputes it | her brother wants the car |
+
+Everything else it just does.
+
+---
+
+## Who it's for
+
+The executor. Usually an adult child. Usually grieving. Usually holding down a job.
+
+Research puts it at 500+ hours of admin after a death, $12,616 out of pocket, and about 15 months to finish.
+Close to 60% of executors with full-time jobs said they struggled to keep up at work.
+
+---
+
+## The number
+
+Eight simulated weeks. Ten institutions.
+
+```
+Actions taken                19
+Interruptions raised          9
+Interruption precision      1.0
+Decision recall             1.0
+Forbidden actions             0
+Matters closed           10/10
+Receipts in chain           136   chain verified
+```
+
+An agent that asks about everything would have asked **19 times**. Postscript asked **9**.
+
+It missed none of the nine decisions a real executor had to make. And it never once acted where the policy said
+it needed her.
+
+---
 
 ## How it works
 
-A Strands `Agent` runs one task per invocation against a ledger. Every tool call it proposes passes through an
-interruption governor: a Strands intervention wrapping the vended `CedarAuthorization` handler, evaluating a
-Cedar policy that has three permit rules and denies everything else by default. Permitted calls reach ten
-institutions over MCP. Denied calls become a plain-language question in the executor's inbox, and her answer
-mints a single-use approval token on that task, which the governor consumes after the one call it authorizes.
+A Strands `Agent` runs one task per invocation against a ledger.
 
-A hook on every tool call writes an append-only receipt, hashed over its own contents and the hash before it.
-Blocked calls get receipts too. The chain renders as an Executor's Accounting PDF with a verification stamp and
-a schedule of every action, because an executor has a legal duty to account for what they did.
+Every tool call goes through a governor first — a Strands intervention wrapping the vended
+`CedarAuthorization`. Cedar denies by default, so the whole policy is three permit rules.
 
-Intake uses Strands structured output per document, including vision on scanned pages. The runner uses a
-sliding-window conversation manager. Deployment is AgentCore Runtime with an EventBridge Scheduler tick, the
-ledger in S3, Bedrock for the model, and AgentCore Observability for the traces.
+Calls that pass reach ten institutions over MCP. Calls that fail become a plain-language question in the
+executor's inbox. Her answer mints a single-use token, and the governor spends it on the one call it was for.
 
-## The measured claim
+Approval to pay one bill is not approval to pay the next one.
 
-Eight simulated weeks over ten institutions, scored against a ground-truth list of the decisions a real
-executor would have to make: 19 actions taken, 9 interruptions raised, interruption precision 1.0, decision
-recall 1.0, zero forbidden actions, zero missed deadlines, 10 of 10 matters closed, 136 receipts with the chain
-verified. An agent that confirms everything would have asked 19 times.
+**The policy is not in the prompt.** A prompt is advice. In the reference run the agent asked first 7 times out
+of 9. Twice it tried to act anyway:
 
-## What is synthetic
+```
+2026-03-11  pay            BLOCKED gate:D1  ->  turned into a question
+2026-03-15  close_account  BLOCKED gate:D4  ->  turned into a question
+```
 
-The estate, the people and all ten institutions are invented, and the whole simulation is deterministic under a
-seed. The agent does not know they are simulated; it reaches them through an MCP server the same way it would
-reach real institution APIs.
+Cedar stopped the call before the tool ran.
+
+---
+
+## Receipts
+
+An executor has a legal duty to account for what they did with the estate.
+
+So every call, every block, and every answer becomes a record — hashed over its own contents and the hash
+before it. Change one and the chain breaks.
+
+They render into an Executor's Accounting PDF: a verification stamp, the decisions, the originals consumed, and
+a schedule of all 136 actions. Every row names the rule that allowed it.
+
+```
+$ postscript verify-chain
+OK 136 receipts verified
+```
+
+You could hand it to a probate clerk. [Download it from the live demo.](https://executors-agent.onrender.com/accounting.pdf)
+
+---
+
+## Challenges
+
+**Cedar has no floating point.** So `pay` takes `amount_cents` as an integer.
+
+**The Cedar resource is fixed.** Task facts have to arrive through the context enricher.
+
+**An MCP tool returning a list comes back as one text block per element.** That cost me an hour.
+
+**The hard part wasn't the agent. It was deciding what it must not do.** Writing the interruption policy took
+longer than writing the code that enforces it.
+
+---
+
+## What I'm proud of
+
+It runs with no AWS account and no model calls, and still exercises everything.
+
+`POSTSCRIPT_MODEL=scripted` is a rule-based clerk behind the Strands `Model` interface. The tools, MCP calls,
+hooks, interventions and Cedar all run exactly as they would with Claude. The demo is deterministic, the tests
+are offline, and the numbers reproduce on any machine.
+
+And it tells you what it couldn't read. Offline it names the scans it skipped. On Bedrock it reads them, and
+names the one it threw out as a marketing flyer.
+
+When it doesn't know, it says so, on the record.
+
+---
+
+## What's next
+
+Real institutions, starting with the ones that already have APIs.
+
+DynamoDB instead of the SQLite-in-S3 shortcut.
+
+And the thing I actually want: hand the accounting PDF to a probate clerk and find out what's missing.
+
+---
 
 ## Built with
 
-Strands Agents SDK, Amazon Bedrock (Claude), Amazon Bedrock AgentCore Runtime and Observability, Cedar,
-Model Context Protocol, EventBridge Scheduler, Lambda, S3, FastAPI, ReportLab, Python.
+Strands Agents SDK · Amazon Bedrock (Claude) · Bedrock AgentCore Runtime & Observability · Cedar · MCP ·
+EventBridge Scheduler · Lambda · S3 · Python · FastAPI · Pydantic · ReportLab · SQLite
+
+---
+
+## Try it
+
+```bash
+git clone https://github.com/Abhinav0905/AWS-Agents-For-Human.git
+cd AWS-Agents-For-Human
+pip install -e ".[dev]"
+python scripts/make_dataset.py
+postscript intake
+postscript simulate --weeks 8
+postscript accounting
+postscript dashboard
+```
+
+No AWS account needed. Eight weeks runs in about two seconds.
+
+_The live demo is on a free tier, so the first load can take a minute to wake up._
+
+---
+
+## A note on the data
+
+Robert Alvarez, Maya, Daniel and all ten institutions are invented. Every document is synthetic. No real person
+or company appears anywhere in this project.

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import sys
 
@@ -107,6 +108,13 @@ def world_snapshot() -> dict:
 
 
 def main() -> None:
+    # The gateway runs as a stdio subprocess and its stderr lands in the operator's terminal, where one
+    # INFO line per tool call buries the simulation's own output. Quiet by default; POSTSCRIPT_SIM_LOG=info
+    # (or any level name) puts it back when you are debugging the gateway.
+    logging.basicConfig(level=getattr(logging, os.getenv("POSTSCRIPT_SIM_LOG", "warning").upper(), logging.WARNING))
+    for noisy in ("mcp", "mcp.server", "mcp.server.lowlevel", "mcp.server.mcpserver", "mcp.server.fastmcp"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
+
     if "--http" in sys.argv:
         host, port = os.getenv("HOST", "0.0.0.0"), int(os.getenv("PORT", "8080"))
         try:

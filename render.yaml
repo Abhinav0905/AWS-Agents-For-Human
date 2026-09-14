@@ -1,0 +1,22 @@
+# Render blueprint for the Postscript demo dashboard.
+# The build runs the eight-week simulation once, so the site judges land on is a
+# finished estate: the ledger, the nine decisions, the activity feed and the receipts.
+services:
+  - type: web
+    name: postscript
+    runtime: python
+    plan: free
+    buildCommand: |
+      pip install -e .
+      python scripts/make_dataset.py
+      postscript intake
+      postscript simulate --weeks 8
+      postscript accounting
+    startCommand: postscript dashboard --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: POSTSCRIPT_MODEL
+        value: scripted
+      - key: POSTSCRIPT_SIM_SEED
+        value: "7"

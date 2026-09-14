@@ -1,0 +1,11 @@
+flowchart TD
+  A["Task due today (ledger)"] --> B["Runner proposes a tool call<br/>e.g. submit_notification, pay"]
+  B --> C{"Cedar check (Strands intervention)<br/>Agent::runner, Action::tool, context.input + task facts"}
+  C -->|"permit: clerical work, or a live approval"| D["Tool runs via the MCP gateway"]
+  C -->|"deny: D1 money · D2 original · D3 signature · D4 irreversible · D5 heirs"| E["Governor raises the decision once<br/>(or the agent already asked via decisions_request)"]
+  E --> F["Task -> awaiting_human<br/>model sees blocked, stops"]
+  F --> G["Executor approves, edits or denies<br/>inbox, web (SMS optional)"]
+  G -->|"single-use approval token on the task"| B
+  D --> H["Receipt appended<br/>hash-chained, policy basis recorded"]
+  E --> H
+  G --> H

@@ -1,0 +1,28 @@
+kind: brokerage
+summary: Transfer assets to the estate; needs an original and a medallion signature guarantee.
+documents:
+- death_certificate
+- transfer_form
+originals_typical: true
+channel: mail
+typical_response_days: 7
+initial_task: transfer
+likely_flags:
+  consumes_original: true
+  requires_signature: true
+escalation_days:
+- 7
+- 14
+- 21
+letter: 'To {institution},
+
+
+  I am writing to inform you that {decedent}, the holder of the account ending in {last4}, died on {dod}.
+  I am the executor of the estate. Please note the account accordingly and tell me what you need from
+  me to transfer the assets to the estate account. A copy of the death certificate is enclosed (certified
+  original).
+
+
+  Sincerely,
+
+  {executor}, Executor'

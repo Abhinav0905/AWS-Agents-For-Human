@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Postscript daily tick - EventBridge Scheduler -> Lambda -> AgentCore Runtime
+Parameters:
+  AgentRuntimeArn:
+    Type: String
+    Description: ARN printed by `agentcore launch`
+  ScheduleExpression:
+    Type: String
+    Default: cron(0 15 * * ? *)
+    Description: Daily at 15:00 UTC (08:00 Pacific)
+Resources:
+  TickRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{Effect: Allow, Principal: {Service: lambda.amazonaws.com}, Action: sts:AssumeRole}]
+      ManagedPolicyArns: [arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+      Policies:
+        - PolicyName: invoke-postscript
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [bedrock-agentcore:InvokeAgentRuntime]
+                Resource: [!Ref AgentRuntimeArn, !Sub "${AgentRuntimeArn}/*"]
+  TickFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: postscript-tick
+      Runtime: python3.12
+      Handler: lambda_tick.handler
+      Timeout: 600
+      Role: !GetAtt TickRole.Arn
+      Environment:
+        Variables:
+          AGENT_RUNTIME_ARN: !Ref AgentRuntimeArn
+      Code:
+        ZipFile: |
+          import json, os, uuid, boto3
+          def handler(event, context):
+              c = boto3.client("bedrock-agentcore")
+              r = c.invoke_agent_runtime(agentRuntimeArn=os.environ["AGENT_RUNTIME_ARN"],
+                                         runtimeSessionId=f"postscript-daily-{uuid.uuid4()}",
+                                         payload=json.dumps({"action": "tick"}).encode())
+              body = r["response"].read()
+              return {"statusCode": 200, "body": body.decode()}
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{Effect: Allow, Principal: {Service: scheduler.amazonaws.com}, Action: sts:AssumeRole}]
+      Policies:
+        - PolicyName: invoke-tick
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement: [{Effect: Allow, Action: lambda:InvokeFunction, Resource: !GetAtt TickFunction.Arn}]
+  DailyTick:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: postscript-daily-tick
+      ScheduleExpression: !Ref ScheduleExpression
+      FlexibleTimeWindow: {Mode: "OFF"}
+      Target:
+        Arn: !GetAtt TickFunction.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+Outputs:
+  TickFunctionArn:
+    Value: !GetAtt TickFunction.Arn

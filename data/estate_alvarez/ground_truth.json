@@ -1,0 +1,268 @@
+{
+  "estate": {
+    "id": "est_alvarez",
+    "decedent_name": "Robert (Bob) Alvarez",
+    "date_of_death": "2026-03-02",
+    "executor_name": "Maya Alvarez",
+    "executor_id": "maya",
+    "heirs": [
+      "Maya Alvarez",
+      "Daniel Alvarez"
+    ],
+    "certified_copies_on_hand": 5
+  },
+  "sim_start": "2026-03-09",
+  "institutions": [
+    {
+      "id": "harborline",
+      "name": "Harborline Bank",
+      "kind": "bank",
+      "channel": "mail",
+      "accounts": [
+        "4417",
+        "9902"
+      ],
+      "script": "bank_close"
+    },
+    {
+      "id": "pacific_power",
+      "name": "Pacific Coast Power",
+      "kind": "utility",
+      "channel": "portal",
+      "accounts": [
+        "3381"
+      ],
+      "script": "utility_bill"
+    },
+    {
+      "id": "northwind",
+      "name": "Northwind Telecom",
+      "kind": "telecom",
+      "channel": "email",
+      "accounts": [
+        "7720"
+      ],
+      "script": "telecom_ignore"
+    },
+    {
+      "id": "sequoia_life",
+      "name": "Sequoia Life Insurance",
+      "kind": "insurer",
+      "channel": "mail",
+      "accounts": [
+        "5518"
+      ],
+      "script": "insurer_claim"
+    },
+    {
+      "id": "golden_pension",
+      "name": "Golden State Pension Board",
+      "kind": "pension",
+      "channel": "mail",
+      "accounts": [
+        "0064"
+      ],
+      "script": "pension_notary"
+    },
+    {
+      "id": "streambox",
+      "name": "StreamBox",
+      "kind": "subscription",
+      "channel": "email",
+      "accounts": [
+        "2210"
+      ],
+      "script": "subscription_cancel"
+    },
+    {
+      "id": "equinox_bureau",
+      "name": "Equinox Credit Bureau",
+      "kind": "credit_bureau",
+      "channel": "mail",
+      "accounts": [
+        "8891"
+      ],
+      "script": "credit_bureau_alert"
+    },
+    {
+      "id": "state_dmv",
+      "name": "State Department of Motor Vehicles",
+      "kind": "dmv",
+      "channel": "in_person",
+      "accounts": [
+        "6142"
+      ],
+      "script": "dmv_title"
+    },
+    {
+      "id": "summit_brokerage",
+      "name": "Summit Brokerage",
+      "kind": "brokerage",
+      "channel": "mail",
+      "accounts": [
+        "7305"
+      ],
+      "script": "brokerage_medallion"
+    },
+    {
+      "id": "redwood_fitness",
+      "name": "Redwood Fitness",
+      "kind": "gym",
+      "channel": "mail",
+      "accounts": [
+        "1177"
+      ],
+      "script": "gym_stonewall"
+    }
+  ],
+  "decision_events": [
+    {
+      "institution_id": "harborline",
+      "types": [
+        "D2"
+      ]
+    },
+    {
+      "institution_id": "harborline",
+      "types": [
+        "D4"
+      ]
+    },
+    {
+      "institution_id": "pacific_power",
+      "types": [
+        "D1"
+      ]
+    },
+    {
+      "institution_id": "sequoia_life",
+      "types": [
+        "D2"
+      ]
+    },
+    {
+      "institution_id": "sequoia_life",
+      "types": [
+        "D4"
+      ]
+    },
+    {
+      "institution_id": "golden_pension",
+      "types": [
+        "D3"
+      ]
+    },
+    {
+      "institution_id": "state_dmv",
+      "types": [
+        "D3"
+      ]
+    },
+    {
+      "institution_id": "state_dmv",
+      "types": [
+        "D5"
+      ]
+    },
+    {
+      "institution_id": "summit_brokerage",
+      "types": [
+        "D2",
+        "D3"
+      ]
+    }
+  ],
+  "expected_certificates_remaining": 2,
+  "mail_manifest": [
+    {
+      "file": "mail_001.pdf",
+      "institution_id": "pacific_power",
+      "account_last4": "3381",
+      "kind": "bill"
+    },
+    {
+      "file": "mail_002.png",
+      "institution_id": "redwood_fitness",
+      "account_last4": "1177",
+      "kind": "billing_notice"
+    },
+    {
+      "file": "mail_003.pdf",
+      "institution_id": null,
+      "account_last4": null,
+      "kind": "flyer"
+    },
+    {
+      "file": "mail_004.pdf",
+      "institution_id": "golden_pension",
+      "account_last4": "0064",
+      "kind": "benefit_letter"
+    },
+    {
+      "file": "mail_005.pdf",
+      "institution_id": "summit_brokerage",
+      "account_last4": "7305",
+      "kind": "statement"
+    },
+    {
+      "file": "mail_006.eml",
+      "institution_id": "northwind",
+      "account_last4": "7720",
+      "kind": "bill"
+    },
+    {
+      "file": "mail_007.pdf",
+      "institution_id": "redwood_fitness",
+      "account_last4": "1177",
+      "kind": "billing_notice"
+    },
+    {
+      "file": "mail_008.pdf",
+      "institution_id": "equinox_bureau",
+      "account_last4": "8891",
+      "kind": "notice"
+    },
+    {
+      "file": "mail_009.eml",
+      "institution_id": "streambox",
+      "account_last4": "2210",
+      "kind": "receipt"
+    },
+    {
+      "file": "mail_010.png",
+      "institution_id": "harborline",
+      "account_last4": "9902",
+      "kind": "statement"
+    },
+    {
+      "file": "mail_011.pdf",
+      "institution_id": "harborline",
+      "account_last4": "4417",
+      "kind": "statement"
+    },
+    {
+      "file": "mail_012.pdf",
+      "institution_id": "state_dmv",
+      "account_last4": "6142",
+      "kind": "registration"
+    },
+    {
+      "file": "mail_013.png",
+      "institution_id": "golden_pension",
+      "account_last4": "0064",
+      "kind": "benefit_letter"
+    },
+    {
+      "file": "mail_014.pdf",
+      "institution_id": "harborline",
+      "account_last4": "4417",
+      "kind": "statement"
+    },
+    {
+      "file": "mail_015.pdf",
+      "institution_id": "sequoia_life",
+      "account_last4": "5518",
+      "kind": "policy_letter"
+    }
+  ]
+}

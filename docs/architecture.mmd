@@ -1,0 +1,38 @@
+flowchart LR
+  MAIL["Estate mail<br/>scans, PDFs, emails"]
+  SCHED["EventBridge Scheduler<br/>daily tick"]
+  LAM["Lambda<br/>invoke_agent_runtime"]
+
+  subgraph AWS["AWS account"]
+    subgraph RT["Amazon Bedrock AgentCore Runtime · Strands Agents SDK"]
+      INTAKE["Intake agent<br/>structured output"]
+      RUNNER["Runner agent<br/>one task per invocation"]
+      GOV["Interruption governor<br/>Cedar policy via Interventions"]
+      HOOKS["Receipt hooks<br/>AfterToolCallEvent"]
+    end
+    LEDGER[("Ledger<br/>SQLite in S3 (DynamoDB-ready)")]
+    CHAIN[("Receipt chain<br/>append-only, hash-linked")]
+    MEM[("AgentCore Memory<br/>optional session manager")]
+    BR["Amazon Bedrock<br/>Claude"]
+    OBS["AgentCore Observability<br/>OTEL traces"]
+  end
+
+  GW["Institution gateway (MCP)<br/>10 simulated institutions"]
+  INBOX["Decision inbox<br/>web (SMS optional)"]
+  PDF["Executor's Accounting<br/>PDF, chain-verified"]
+  EXEC(("Executor"))
+
+  MAIL --> INTAKE --> LEDGER
+  SCHED --> LAM --> RUNNER
+  LEDGER <--> RUNNER
+  RUNNER --> GOV
+  GOV -->|permit| GW
+  GW -->|replies, inbound mail| RUNNER
+  GOV -->|D1..D5 decision| INBOX
+  INBOX -->|single-use approval token| RUNNER
+  GOV --> HOOKS --> CHAIN --> PDF --> EXEC
+  EXEC --> INBOX
+  RUNNER <--> MEM
+  INTAKE -.-> BR
+  RUNNER -.-> BR
+  RT -.-> OBS

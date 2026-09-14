@@ -1,0 +1,13 @@
+{
+  "id": "est_alvarez",
+  "decedent_name": "Robert (Bob) Alvarez",
+  "date_of_death": "2026-03-02",
+  "executor_name": "Maya Alvarez",
+  "executor_id": "maya",
+  "heirs": [
+    "Maya Alvarez",
+    "Daniel Alvarez"
+  ],
+  "certified_copies_on_hand": 5,
+  "sim_start": "2026-03-09"
+}

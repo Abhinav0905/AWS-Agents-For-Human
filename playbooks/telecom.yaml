@@ -1,0 +1,23 @@
+kind: telecom
+summary: Cancel or transfer lines; carriers often ignore the first notice.
+documents:
+- death_certificate
+channel: email
+typical_response_days: 5
+initial_task: notify
+likely_flags: {}
+escalation_days:
+- 7
+- 14
+- 21
+letter: 'To {institution},
+
+
+  I am writing to inform you that {decedent}, the holder of the account ending in {last4}, died on {dod}.
+  I am the executor of the estate. Please note the account accordingly and tell me what you need from
+  me to close the account. A copy of the death certificate is enclosed.
+
+
+  Sincerely,
+
+  {executor}, Executor'

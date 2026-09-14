@@ -1,0 +1,25 @@
+kind: pension
+summary: Stop payments, set up survivor benefits; forms are usually notarized.
+documents:
+- death_certificate
+- survivor_form
+channel: mail
+typical_response_days: 10
+initial_task: notify
+likely_flags:
+  requires_signature: true
+escalation_days:
+- 7
+- 14
+- 21
+letter: 'To {institution},
+
+
+  I am writing to inform you that {decedent}, the holder of the account ending in {last4}, died on {dod}.
+  I am the executor of the estate. Please note the account accordingly and tell me what you need from
+  me to stop payments and set up any survivor benefit. A copy of the death certificate is enclosed.
+
+
+  Sincerely,
+
+  {executor}, Executor'

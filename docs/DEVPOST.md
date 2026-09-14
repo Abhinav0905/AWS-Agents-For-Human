@@ -177,7 +177,9 @@ And the thing I actually want: hand the accounting PDF to a probate clerk and fi
 
 ## Try it
 
-**Live demo:** _<paste your Render URL here>_
+**Live demo:** https://postscript-0l6l.onrender.com
+
+_Free tier, so it sleeps when idle — the first load can take about a minute to wake up._
 
 **Code:** https://github.com/Abhinav0905/AWS-Agents-For-Human
 

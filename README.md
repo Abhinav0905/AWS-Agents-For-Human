@@ -6,6 +6,9 @@ person exactly nine times in eight weeks.
 Built for the AWS [Agents for Humans](https://agentsforhumans.devpost.com/) hackathon, Everyday Agents track.
 Strands Agents SDK, Amazon Bedrock, AgentCore Runtime, Cedar, MCP.
 
+**Live demo:** https://postscript-0l6l.onrender.com — a finished eight-week run you can click through.
+Free tier, so the first load can take about a minute to wake up.
+
 ![Architecture](docs/img/architecture.png)
 
 ## The problem

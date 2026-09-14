@@ -177,7 +177,7 @@ And the thing I actually want: hand the accounting PDF to a probate clerk and fi
 
 ## Try it
 
-**Live demo:** https://postscript-0l6l.onrender.com
+**Live demo:** https://executors-agent.onrender.com
 
 _Free tier, so it sleeps when idle — the first load can take about a minute to wake up._
 
